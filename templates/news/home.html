@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная - The Daily Bugle{% endblock %}
+
+{% block extra_css %}
+<style>
+    .newspaper-header {
+        text-align: center;
+        border-bottom: 4px double #000;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        background: linear-gradient(to bottom, #fff 0%, #f5f5f5 100%);
+    }
+    
+    .newspaper-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 5rem;
+        font-weight: 900;
+        color: #000;
+        text-transform: uppercase;
+        letter-spacing: 8px;
+        margin: 0;
+        text-shadow: 2px 2px 0px #DC143C;
+        line-height: 1;
+    }
+    
+    .newspaper-subtitle {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.2rem;
+        color: #666;
+        margin-top: 0.5rem;
+        letter-spacing: 3px;
+    }
+    
+    .newspaper-date {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.9rem;
+        color: #333;
+        margin-top: 1rem;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        padding: 0.5rem 0;
+        display: inline-block;
+        width: 100%;
+    }
+    
+    .newspaper-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .newspaper-columns {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .main-column {
+        border-right: 2px solid #000;
+        padding-right: 2rem;
+    }
+    
+    .headline-article {
+        border-bottom: 3px solid #000;
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .headline-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .headline-title a {
+        color: #000;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .headline-title a:hover {
+        color: #DC143C;
+    }
+    
+    .headline-byline {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.85rem;
+        color: #666;
+        font-style: italic;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5rem;
+    }
+    
+    .headline-content {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        column-count: 2;
+        column-gap: 2rem;
+        text-align: justify;
+    }
+    
+    .article-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .article-item {
+        border: 1px solid #000;
+        padding: 1rem;
+        background: #fff;
+        transition: box-shadow 0.3s;
+    }
+    
+    .article-item:hover {
+        box-shadow: 4px 4px 0px #DC143C;
+    }
+    
+    .article-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        line-height: 1.2;
+    }
+    
+    .article-title a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    .article-title a:hover {
+        color: #DC143C;
+    }
+    
+    .article-excerpt {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-top: 0.5rem;
+        text-align: justify;
+    }
+    
+    .article-meta {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.75rem;
+        color: #666;
+        margin-top: 0.75rem;
+        padding-top: 0.5rem;
+        border-top: 1px dotted #ccc;
+    }
+    
+    .sidebar-column {
+        padding-left: 1rem;
+    }
+    
+    .sidebar-section {
+        border: 2px solid #000;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        background: #f9f9f9;
+    }
+    
+    .sidebar-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid #000;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+    }
+    
+    .program-item {
+        border-bottom: 1px dotted #000;
+        padding: 0.75rem 0;
+    }
+    
+    .program-item:last-child {
+        border-bottom: none;
+    }
+    
+    .program-time {
+        font-family: 'Oswald', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #DC143C;
+        margin-bottom: 0.25rem;
+    }
+    
+    .program-title {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .program-title a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    .program-title a:hover {
+        color: #DC143C;
+        text-decoration: underline;
+    }
+    
+    .program-desc {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.85rem;
+        color: #666;
+        line-height: 1.4;
+    }
+    
+    @media (max-width: 768px) {
+        .newspaper-title {
+            font-size: 3rem;
+        }
+        
+        .newspaper-columns {
+            grid-template-columns: 1fr;
+        }
+        
+        .main-column {
+            border-right: none;
+            padding-right: 0;
+        }
+        
+        .headline-content {
+            column-count: 1;
+        }
+        
+        .article-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="newspaper-content">
+    <!-- Newspaper Header -->
+    <div class="newspaper-header">
+        <h1 class="newspaper-title">The Daily Bugle</h1>
+        <p class="newspaper-subtitle">Телеканал</p>
+        <div class="newspaper-date">
+            {% now "l, d F Y"|upper %} • Выпуск №{{ latest_news.count|default:"1" }}
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="newspaper-columns">
+        <!-- Main Column -->
+        <div class="main-column">
+            {% if latest_news %}
+                <!-- Headline Article -->
+                <div class="headline-article">
+                    <h2 class="headline-title">
+                        <a href="{% url 'news_detail' latest_news.0.pk %}">{{ latest_news.0.title|upper }}</a>
+                    </h2>
+                    <div class="headline-byline">
+                        Опубликовано {{ latest_news.0.created_at|date:"d F Y, H:i" }} • Автор: Редакция The Daily Bugle
+                    </div>
+                    <div class="headline-content">
+                        {{ latest_news.0.content|truncatewords:100 }}
+                    </div>
+                </div>
+
+                <!-- Other Articles Grid -->
+                {% if latest_news|length > 1 %}
+                <div class="article-grid">
+                    {% for news in latest_news %}
+                        {% if forloop.counter > 1 %}
+                        <div class="article-item">
+                            <h3 class="article-title">
+                                <a href="{% url 'news_detail' news.pk %}">{{ news.title|upper }}</a>
+                            </h3>
+                            <div class="article-excerpt">
+                                {{ news.content|truncatewords:25 }}
+                            </div>
+                            <div class="article-meta">
+                                {{ news.created_at|date:"d.m.Y" }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <div style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 2px solid #000;">
+                    <a href="{% url 'news_list' %}" class="btn btn-red">Читать все новости</a>
+                </div>
+            {% else %}
+                <div class="headline-article">
+                    <h2 class="headline-title">Новостей пока нет</h2>
+                    <p>Следите за обновлениями!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar Column -->
+        <div class="sidebar-column">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Расписание программ</h3>
+                {% if upcoming_programs %}
+                    {% for program in upcoming_programs %}
+                        {% if forloop.counter <= 5 %}
+                        <div class="program-item">
+                            <div class="program-time">{{ program.start_time|date:"H:i" }}</div>
+                            <div class="program-title">
+                                <a href="{% url 'program_detail' program.pk %}">{{ program.title }}</a>
+                            </div>
+                            <div class="program-desc">{{ program.description|truncatewords:15 }}</div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <a href="{% url 'program_list' %}" class="btn btn-outline-primary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Все программы</a>
+                    </div>
+                {% else %}
+                    <p style="font-size: 0.9rem; color: #666;">Программ не запланировано</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

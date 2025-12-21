@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}Статистика - The Daily Bugle{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4" style="font-family: 'Oswald', sans-serif; color: #DC143C;">Статистика</h1>
+    
+    <!-- Summary Cards -->
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>{{ total_users }}</h3>
+                <p>Всего пользователей</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>{{ total_news }}</h3>
+                <p>Новостных статей</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>{{ total_programs }}</h3>
+                <p>Программ</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Новости по месяцам</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="newsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Программы по месяцам</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="programsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Пользователи по ролям</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="usersChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // News Chart
+    const newsCtx = document.getElementById('newsChart').getContext('2d');
+    const newsData = {
+        labels: [{% for item in news_by_month %}'{{ item.month }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Новостные статьи',
+            data: [{% for item in news_by_month %}{{ item.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: '#DC143C',
+            borderColor: '#B22222',
+            borderWidth: 2
+        }]
+    };
+    new Chart(newsCtx, {
+        type: 'bar',
+        data: newsData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Programs Chart
+    const programsCtx = document.getElementById('programsChart').getContext('2d');
+    const programsData = {
+        labels: [{% for item in programs_by_month %}'{{ item.month }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Программы',
+            data: [{% for item in programs_by_month %}{{ item.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: '#000000',
+            borderColor: '#DC143C',
+            borderWidth: 2
+        }]
+    };
+    new Chart(programsCtx, {
+        type: 'line',
+        data: programsData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Users Chart
+    const usersCtx = document.getElementById('usersChart').getContext('2d');
+    const usersData = {
+        labels: [{% for item in users_by_role %}'{{ item.role|title }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Пользователи',
+            data: [{% for item in users_by_role %}{{ item.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: ['#DC143C', '#000000', '#B22222'],
+            borderWidth: 2
+        }]
+    };
+    new Chart(usersCtx, {
+        type: 'pie',
+        data: usersData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+{% endblock %}

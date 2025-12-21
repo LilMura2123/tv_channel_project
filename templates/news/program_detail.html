@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ program.title }} - The Daily Bugle{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <article class="program-card">
+                <h1 style="font-family: 'Oswald', sans-serif; color: #DC143C;">{{ program.title }}</h1>
+                <div class="mb-3">
+                    <p><strong>Время начала:</strong> {{ program.start_time|date:"d F Y H:i" }}</p>
+                    <p><strong>Время окончания:</strong> {{ program.end_time|date:"d F Y H:i" }}</p>
+                    <p><strong>Длительность:</strong> {{ program.duration }}</p>
+                </div>
+                <div class="program-description">
+                    <h3>Описание</h3>
+                    {{ program.description|linebreaks }}
+                </div>
+                {% if user.is_editor %}
+                    <div class="mt-4">
+                        <a href="{% url 'program_update' program.pk %}" class="btn btn-outline-primary">Редактировать</a>
+                        <a href="{% url 'program_delete' program.pk %}" class="btn btn-danger">Удалить</a>
+                    </div>
+                {% endif %}
+            </article>
+            <a href="{% url 'program_list' %}" class="btn btn-red">Назад к списку программ</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

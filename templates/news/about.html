@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}О проекте - The Daily Bugle{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h1 style="font-family: 'Oswald', sans-serif;">Об авторе</h1>
+                </div>
+                <div class="card-body">
+                    <!-- Информация о разработчике -->
+                    <div class="mb-5">
+                        <h2 class="mb-4" style="color: #DC143C; font-family: 'Oswald', sans-serif;">Информация о разработчике</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong style="font-size: 1.1rem;">ФИО:</strong></p>
+                                <p style="font-size: 1.2rem; color: #333;">{{ developer_name }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong style="font-size: 1.1rem;">Контактные данные:</strong></p>
+                                <p style="font-size: 1.2rem; color: #333;">
+                                    <a href="tel:{{ developer_contact }}" style="color: #DC143C; text-decoration: none;">{{ developer_contact }}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Даты проекта -->
+                    <div class="mb-5" style="border-top: 2px solid #DC143C; padding-top: 2rem;">
+                        <h3 class="mb-3" style="color: #DC143C; font-family: 'Oswald', sans-serif;">Сроки проекта</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Дата начала проекта:</strong></p>
+                                <p style="font-size: 1.1rem; color: #333;">{{ project_start_date }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Дата завершения проекта:</strong></p>
+                                <p style="font-size: 1.1rem; color: #333;">{{ project_end_date }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Описание проекта -->
+                    <div class="mb-5" style="border-top: 2px solid #DC143C; padding-top: 2rem;">
+                        <h3 class="mb-3" style="color: #DC143C; font-family: 'Oswald', sans-serif;">О проекте</h3>
+                        <p class="lead">
+                            Эта система управления The Daily Bugle была разработана как комплексное веб-приложение на Django 
+                            с интеграцией базы данных PostgreSQL, включающее управление доступом на основе ролей, операции CRUD, 
+                            возможности поиска и фильтрации, а также современный пользовательский интерфейс в стиле газеты.
+                        </p>
+                    </div>
+
+                    <!-- Технологии -->
+                    <div class="mb-5" style="border-top: 2px solid #DC143C; padding-top: 2rem;">
+                        <h3 class="mb-3" style="color: #DC143C; font-family: 'Oswald', sans-serif;">Использованные технологии</h3>
+                        <p class="mb-3">В процессе разработки проекта использовались следующие технологии:</p>
+                        <div class="row">
+                            {% for tech in technologies %}
+                                <div class="col-md-4 mb-2">
+                                    <div style="padding: 0.75rem; background-color: #F5F5F5; border-left: 3px solid #DC143C;">
+                                        <strong>{{ tech }}</strong>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <p class="mt-3" style="font-style: italic; color: #666;">
+                            Разработчик имеет опыт работы со всеми перечисленными технологиями и успешно применил их 
+                            при создании данного проекта.
+                        </p>
+                    </div>
+                    
+                    <!-- Возможности -->
+                    <div class="mb-5" style="border-top: 2px solid #DC143C; padding-top: 2rem;">
+                        <h3 class="mb-3" style="color: #DC143C; font-family: 'Oswald', sans-serif;">Реализованные возможности</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">✓ Аутентификация пользователей с управлением доступом на основе ролей (Администратор, Редактор, Обычный пользователь)</li>
+                            <li class="mb-2">✓ Полные операции CRUD для новостей и программ</li>
+                            <li class="mb-2">✓ Расширенный поиск и фильтрация</li>
+                            <li class="mb-2">✓ Панель статистики с интерактивными графиками</li>
+                            <li class="mb-2">✓ Современный дизайн интерфейса в стиле газеты</li>
+                            <li class="mb-2">✓ Интеграция с базой данных PostgreSQL</li>
+                            <li class="mb-2">✓ Комплексная обработка ошибок</li>
+                            <li class="mb-2">✓ Админ-панель с правами доступа на основе ролей</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-5 text-center" style="border-top: 2px solid #DC143C; padding-top: 2rem;">
+                        <a href="{% url 'home' %}" class="btn btn-red">На главную</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
